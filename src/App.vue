@@ -1,60 +1,66 @@
 <template>
   <v-app>
-    <v-app-bar
-      app
-      color="primary"
-      dark
+    <v-card
+        class="mx-auto my-8 pa-8"
+        width="600"
+        min-height="600"
     >
-      <div class="d-flex align-center">
-        <v-img
-          alt="Vuetify Logo"
-          class="shrink mr-2"
-          contain
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-logo-dark.png"
-          transition="scale-transition"
-          width="40"
-        />
-
-        <v-img
-          alt="Vuetify Name"
-          class="shrink mt-1 hidden-sm-and-down"
-          contain
-          min-width="100"
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-name-dark.png"
-          width="100"
-        />
-      </div>
-
-      <v-spacer></v-spacer>
-
-      <v-btn
-        href="https://github.com/vuetifyjs/vuetify/releases/latest"
-        target="_blank"
-        text
-      >
-        <span class="mr-2">Latest Release</span>
-        <v-icon>mdi-open-in-new</v-icon>
-      </v-btn>
-    </v-app-bar>
-
-    <v-main>
-      <HelloWorld/>
-    </v-main>
+      <Menu v-if="displayView === 0"></Menu>
+      <Criteria v-if="displayView === 1"></Criteria>
+      <CompareItems v-if="displayView === 2"></CompareItems>
+      <v-row class="justify-center">
+        <v-btn fab class="mx-3" v-if="displayView !== 0" color="primary" @click="prev">
+          <v-icon>mdi-chevron-left</v-icon>
+        </v-btn>
+        <v-btn fab color="primary" v-if="displayView === 2" @click="compute">
+          <v-icon>mdi-rocket-launch</v-icon>
+        </v-btn>
+        <v-btn fab color="primary" v-else @click="next">
+          <v-icon>mdi-chevron-right</v-icon>
+        </v-btn>
+      </v-row>
+    </v-card>
   </v-app>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld';
+import Menu from "@/components/Menu";
+import Criteria from "@/components/Criteria";
+import CompareItems from "@/components/CompareItems";
+import eventBus from "@/eventBus";
 
 export default {
   name: 'App',
 
   components: {
-    HelloWorld,
+    CompareItems,
+    Criteria,
+    Menu,
   },
-
-  data: () => ({
-    //
-  }),
+  computed: {
+    displayView() {
+      return this.$store.state.displayView
+    }
+  },
+  methods: {
+    next() {
+      const dv = this.$store.state.displayView
+      if (dv === 2) {
+        return
+      }
+      this.$store.commit('setDisplayView', dv + 1)
+    },
+    prev() {
+      const dv = this.$store.state.displayView
+      this.$store.commit('setDisplayView', dv - 1)
+    },
+    compute() {
+      eventBus.$emit('compute');
+    }
+  },
+  data: () => ({}),
+  created() {
+    this.$store.dispatch('init');
+  },
 };
 </script>
