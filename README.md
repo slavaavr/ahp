@@ -1,8 +1,8 @@
 # ahp
 
-Project: https://slavaavr.github.io/ahp
+Project UI: https://slavaavr.github.io/ahp
 
-https://pro.guap.ru/get-material/a40b25dc1bd3242b424ad8ad8c4c980b
+https://en.wikipedia.org/wiki/Analytic_hierarchy_process
 
 ## Project setup
 ```
