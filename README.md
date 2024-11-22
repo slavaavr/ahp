@@ -1,6 +1,6 @@
 # ahp
 
-Project UI: https://slavaavr.github.io/ahp
+[Project UI](https://slavaavr.github.io/ahp)
 
 https://en.wikipedia.org/wiki/Analytic_hierarchy_process
 
